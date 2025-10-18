@@ -1,7 +1,7 @@
 # 🏋️‍♂️ GymBuddy – System Umawiania Treningów
 
-**GymBuddy** to lekki, rozbudowany system webowy napisany w czystym PHP, wspierany przez PostgreSQL i uruchamiany w środowisku Docker.  
-Aplikacja umożliwia użytkownikom:
+**GymBuddy** to portal umożliwiający użytkownikom wspólne planowanie treningów.  
+Aplikacja pozwala na:
 
 - tworzenie profili,
 - wyszukiwanie partnerów treningowych,
@@ -18,15 +18,22 @@ Aplikacja umożliwia użytkownikom:
 - **styled-components** – do modularnego stylowania  
   > Styled Components zapewniają czytelne, modularne stylowanie bez konfliktów nazw klas. Razem z React pozwalają tworzyć nowoczesny, przejrzysty i łatwy w utrzymaniu front-end.
 
+### Backend 
+- **TBA**
+
 ---
 **🖼️ Prototyp Figma**
 
 Do repozytorium dołączono screeny z prototypu aplikacji przygotowanego w Figmie, które przedstawiają kluczowe ekrany interfejsu użytkownika:
 
 - 🔐 Panel logowania
+  ![Login](./docs/login.png)
 - 📝 Panel rejestracji
+  ![Register](./docs/signup.png)
 - 🏋️ Ekran wyboru kategorii treningu
+  ![Catalog](./docs/catalog.png)
 - 👤 Profil użytkownika
+  ![Profile](./docs/profile.png)
 
 
 
