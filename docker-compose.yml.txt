@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  # Baza danych PostgreSQL
+  postgres:
+    image: postgres:15
+    container_name: roommate_db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: adminpassword
+      POSTGRES_DB: roommate_finder_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Narzędzie graficzne do podglądu bazy (żebyś widziała tabele)
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: roommate_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+
+  # Kolejka RabbitMQ (z panelem zarządzania)
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: roommate_queue
+    ports:
+      - "5672:5672"   # Port dla aplikacji
+      - "15672:15672" # Panel zarządzania (przez przeglądarkę)
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+
+volumes:
+  postgres_data:
