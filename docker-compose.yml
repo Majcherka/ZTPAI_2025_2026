@@ -1,7 +1,6 @@
 version: '3.8'
 
 services:
-  # Baza danych PostgreSQL
   postgres:
     image: postgres:15
     container_name: roommate_db
@@ -14,7 +13,6 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  # Narzędzie graficzne do podglądu bazy (żebyś widziała tabele)
   pgadmin:
     image: dpage/pgadmin4
     container_name: roommate_pgadmin
@@ -26,13 +24,12 @@ services:
     depends_on:
       - postgres
 
-  # Kolejka RabbitMQ (z panelem zarządzania)
   rabbitmq:
     image: rabbitmq:3-management
     container_name: roommate_queue
     ports:
-      - "5672:5672"   # Port dla aplikacji
-      - "15672:15672" # Panel zarządzania (przez przeglądarkę)
+      - "5672:5672"   
+      - "15672:15672" 
     environment:
       RABBITMQ_DEFAULT_USER: user
       RABBITMQ_DEFAULT_PASS: password
