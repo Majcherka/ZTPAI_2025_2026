@@ -4,16 +4,26 @@ from typing import List
 from app.database import get_db
 from app.models import Listing, User
 from app.schemas import ListingCreate, ListingResponse
-from app.routers.auth import get_current_user # Importujemy nasze zabezpieczenie
+from app.routers.auth import get_current_user
+from app.services.rabbitmq import send_message_to_queue # <--- NOWY IMPORT
 
 router = APIRouter(prefix="/listings", tags=["Listings"])
 
 @router.post("/", response_model=ListingResponse)
-def create_listing(listing: ListingCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+async def create_listing(listing: ListingCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     new_listing = Listing(**listing.dict(), user_id=current_user.id)
     db.add(new_listing)
     db.commit()
     db.refresh(new_listing)
+    
+    message = {
+        "event": "new_listing",
+        "user_email": current_user.email,
+        "listing_title": new_listing.title,
+        "listing_id": new_listing.id
+    }
+    await send_message_to_queue(message)
+
     return new_listing
 
 @router.get("/", response_model=List[ListingResponse])
