@@ -5,7 +5,7 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from app.database import get_db
 from app.models import User
 from app.utils import verify_password, create_access_token, get_password_hash, SECRET_KEY, ALGORITHM
-from app.schemas import Token, UserCreate 
+from app.schemas import Token, UserCreate, UserResponse 
 from jose import JWTError, jwt
 
 router = APIRouter(tags=["Authentication"])
@@ -59,13 +59,12 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db:
             headers={"WWW-Authenticate": "Bearer"},
         )
         
-
     try:
         if not verify_password(form_data.password, user.hashed_password):
              raise HTTPException(status_code=401, detail="Incorrect password")
     except Exception as e:
         print(f"Błąd weryfikacji hasła: {e}")
-        raise HTTPException(status_code=401, detail="Błąd weryfikacji danych (zresetuj bazę)")
+        raise HTTPException(status_code=401, detail="Błąd weryfikacji danych")
 
     access_token = create_access_token(data={"sub": user.email})
     

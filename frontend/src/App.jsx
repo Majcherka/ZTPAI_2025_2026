@@ -7,6 +7,7 @@ import AddListing from './pages/AddListing';
 import ListingDetails from './pages/ListingDetails';
 import MyProfile from './pages/MyProfile';
 import Favorites from './pages/Favorites';
+import AdminDashboard from './pages/AdminDashboard'; 
 
 function App() {
   return (
@@ -20,6 +21,9 @@ function App() {
         <Route path="/listings/:id" element={<ListingDetails />} />
         <Route path="/profile" element={<MyProfile />} />
         <Route path="/favorites" element={<Favorites />} />
+        
+        {/* 2. Dodajemy nową trasę */}
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
       </Routes>
     </Router>
   );
