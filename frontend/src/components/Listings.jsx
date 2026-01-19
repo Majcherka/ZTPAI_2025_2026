@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import api from '../api';
-import { Container, Row, Col, Card, Badge } from 'react-bootstrap';
+import { Container, Row, Col, Card, Badge, Button } from 'react-bootstrap'; 
+import { useNavigate } from 'react-router-dom'; 
 
 function Listings() {
   const [listings, setListings] = useState([]);
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -35,9 +37,17 @@ function Listings() {
                   {listing.description.substring(0, 100)}...
                 </Card.Text>
               </Card.Body>
-              <Card.Footer className="bg-white border-top-0">
-                <small className="text-muted">Dodano przez ID: {listing.user_id}</small>
+              
+              {/* ZMIANA W STOPCE: PRZYCISK */}
+              <Card.Footer className="bg-white border-top-0 d-grid">
+                <Button 
+                  variant="outline-primary" 
+                  onClick={() => navigate(`/listings/${listing.id}`)}
+                >
+                  Zobacz szczegóły
+                </Button>
               </Card.Footer>
+              
             </Card>
           </Col>
         ))}
