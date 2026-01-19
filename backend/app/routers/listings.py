@@ -29,6 +29,11 @@ async def create_listing(listing: ListingCreate, db: Session = Depends(get_db), 
 def read_my_listings(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     return current_user.listings
 
+
+@router.get("/favorites", response_model=List[ListingResponse])
+def read_favorite_listings(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    return current_user.favorites
+
 @router.get("/{listing_id}", response_model=ListingResponse)
 def read_listing(listing_id: int, db: Session = Depends(get_db)):
     listing = db.query(Listing).filter(Listing.id == listing_id).first()
