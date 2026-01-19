@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import AddListing from './pages/AddListing';
 import ListingDetails from './pages/ListingDetails';
 import MyProfile from './pages/MyProfile';
+import Favorites from './pages/Favorites';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/add-listing" element={<AddListing />} />
         <Route path="/listings/:id" element={<ListingDetails />} />
         <Route path="/profile" element={<MyProfile />} />
+        <Route path="/favorites" element={<Favorites />} />
       </Routes>
     </Router>
   );
