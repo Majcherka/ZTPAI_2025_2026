@@ -23,6 +23,7 @@ function MyNavbar() {
             
             {token ? (
               <>
+                <Nav.Link as={Link} to="/favorites">Ulubione</Nav.Link>
                 <Nav.Link as={Link} to="/profile">Mój Profil</Nav.Link>
                 <Nav.Link as={Link} to="/add-listing" className="text-warning">
                   + Dodaj Ogłoszenie
