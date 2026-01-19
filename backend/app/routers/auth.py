@@ -1,3 +1,4 @@
+from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
@@ -74,3 +75,14 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db:
         "role": user.role,
         "user_id": user.id
     }
+
+@router.get("/users", response_model=List[UserResponse])
+def read_users(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    if current_user.role != "ADMIN":
+        raise HTTPException(
+            status_code=403, 
+            detail="Brak uprawnień. Tylko administrator może przeglądać listę użytkowników."
+        )
+    
+    users = db.query(User).all()
+    return users
