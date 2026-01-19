@@ -7,9 +7,9 @@ function MyNavbar() {
   const token = localStorage.getItem('token');
 
   const handleLogout = () => {
-    localStorage.removeItem('token'); 
-    navigate('/login'); 
-    window.location.reload(); 
+    localStorage.removeItem('token');
+    navigate('/login');
+    window.location.reload();
   };
 
   return (
@@ -22,8 +22,8 @@ function MyNavbar() {
             <Nav.Link as={Link} to="/">Ogłoszenia</Nav.Link>
             
             {token ? (
-              //  DLA ZALOGOWANYCH
               <>
+                <Nav.Link as={Link} to="/profile">Mój Profil</Nav.Link>
                 <Nav.Link as={Link} to="/add-listing" className="text-warning">
                   + Dodaj Ogłoszenie
                 </Nav.Link>
@@ -32,7 +32,6 @@ function MyNavbar() {
                 </Button>
               </>
             ) : (
-              //   DLA NIEZALOGOWANYCH
               <>
                 <Nav.Link as={Link} to="/login">Logowanie</Nav.Link>
                 <Nav.Link as={Link} to="/register">Rejestracja</Nav.Link>
