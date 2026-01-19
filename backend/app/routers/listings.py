@@ -5,7 +5,7 @@ from app.database import get_db
 from app.models import Listing, User
 from app.schemas import ListingCreate, ListingResponse
 from app.routers.auth import get_current_user
-from app.services.rabbitmq import send_message_to_queue # <--- NOWY IMPORT
+from app.services.rabbitmq import send_message_to_queue
 
 router = APIRouter(prefix="/listings", tags=["Listings"])
 
@@ -25,6 +25,13 @@ async def create_listing(listing: ListingCreate, db: Session = Depends(get_db), 
     await send_message_to_queue(message)
 
     return new_listing
+
+@router.get("/{listing_id}", response_model=ListingResponse)
+def read_listing(listing_id: int, db: Session = Depends(get_db)):
+    listing = db.query(Listing).filter(Listing.id == listing_id).first()
+    if listing is None:
+        raise HTTPException(status_code=404, detail="Listing not found")
+    return listing
 
 @router.get("/", response_model=List[ListingResponse])
 def read_listings(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
