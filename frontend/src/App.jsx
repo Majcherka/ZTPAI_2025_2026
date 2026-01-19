@@ -4,7 +4,8 @@ import Listings from './components/Listings';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import AddListing from './pages/AddListing';
-import ListingDetails from './pages/ListingDetails'; 
+import ListingDetails from './pages/ListingDetails';
+import MyProfile from './pages/MyProfile';
 
 function App() {
   return (
@@ -15,9 +16,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/add-listing" element={<AddListing />} />
-        
-        {/* 2. NOWA TRASA (parametr :id) */}
         <Route path="/listings/:id" element={<ListingDetails />} />
+        <Route path="/profile" element={<MyProfile />} />
       </Routes>
     </Router>
   );
