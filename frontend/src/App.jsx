@@ -3,6 +3,7 @@ import MyNavbar from './components/MyNavbar';
 import Listings from './components/Listings';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import AddListing from './pages/AddListing'; 
 
 function App() {
   return (
@@ -12,7 +13,9 @@ function App() {
         <Route path="/" element={<Listings />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        {/* Tu zaraz dodamy dodawanie ogłoszeń */}
+        
+        {/* 2. NOWA TRASA: */}
+        <Route path="/add-listing" element={<AddListing />} />
       </Routes>
     </Router>
   );
