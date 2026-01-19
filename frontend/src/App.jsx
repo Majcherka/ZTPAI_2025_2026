@@ -3,7 +3,8 @@ import MyNavbar from './components/MyNavbar';
 import Listings from './components/Listings';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import AddListing from './pages/AddListing'; 
+import AddListing from './pages/AddListing';
+import ListingDetails from './pages/ListingDetails'; 
 
 function App() {
   return (
@@ -13,9 +14,10 @@ function App() {
         <Route path="/" element={<Listings />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        
-        {/* 2. NOWA TRASA: */}
         <Route path="/add-listing" element={<AddListing />} />
+        
+        {/* 2. NOWA TRASA (parametr :id) */}
+        <Route path="/listings/:id" element={<ListingDetails />} />
       </Routes>
     </Router>
   );
