@@ -40,3 +40,19 @@ def read_listing(listing_id: int, db: Session = Depends(get_db)):
 def read_listings(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     listings = db.query(Listing).offset(skip).limit(limit).all()
     return listings
+
+@router.post("/{listing_id}/favorite")
+def toggle_favorite(listing_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    listing = db.query(Listing).filter(Listing.id == listing_id).first()
+    if not listing:
+        raise HTTPException(status_code=404, detail="Listing not found")
+
+    if listing in current_user.favorites:
+        current_user.favorites.remove(listing)
+        msg = "removed"
+    else:
+        current_user.favorites.append(listing)
+        msg = "added"
+        
+    db.commit()
+    return {"status": msg}
