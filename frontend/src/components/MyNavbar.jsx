@@ -32,6 +32,7 @@ function MyNavbar() {
                 <Nav.Link as={Link} to="/favorites">Ulubione</Nav.Link>
                 <Nav.Link as={Link} to="/add-listing">Dodaj Ogłoszenie</Nav.Link>
                 <Nav.Link as={Link} to="/profile">Mój Profil</Nav.Link>
+                <Nav.Link as={Link} to="/messages">Wiadomości</Nav.Link>
                 
                 {/* --- TO JEST NOWA CZĘŚĆ: Przycisk widoczny TYLKO dla Admina --- */}
                 {role === 'ADMIN' && (

@@ -8,6 +8,7 @@ import ListingDetails from './pages/ListingDetails';
 import MyProfile from './pages/MyProfile';
 import Favorites from './pages/Favorites';
 import AdminDashboard from './pages/AdminDashboard'; 
+import MyMessages from './pages/MyMessages';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/listings/:id" element={<ListingDetails />} />
         <Route path="/profile" element={<MyProfile />} />
         <Route path="/favorites" element={<Favorites />} />
+        <Route path="/messages" element={<MyMessages />} />
         
         {/* 2. Dodajemy nową trasę */}
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
