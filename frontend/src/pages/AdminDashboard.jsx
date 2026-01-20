@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import api from '../api';
-import { Container, Table, Badge, Alert } from 'react-bootstrap';
+import { Container, Table, Badge, Alert, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { Trash } from 'react-bootstrap-icons'; 
 
 function AdminDashboard() {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const currentUserId = localStorage.getItem('user_id'); 
 
   useEffect(() => {
     fetchUsers();
@@ -18,13 +20,27 @@ function AdminDashboard() {
       setUsers(response.data);
     } catch (err) {
       console.error(err);
-      setError("Brak dostępu. Tylko administrator może zobaczyć tę stronę.");
+      setError("Brak dostępu.");
       if (err.response && (err.response.status === 403 || err.response.status === 401)) {
         setTimeout(() => {
             localStorage.removeItem('token');
             navigate('/login');
         }, 2000);
       }
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm("Czy na pewno chcesz usunąć tego użytkownika? Tej operacji nie można cofnąć.")) {
+      return;
+    }
+
+    try {
+      await api.delete(`/users/${id}`);
+      setUsers(users.filter(user => user.id !== id));
+    } catch (err) {
+      console.error(err);
+      alert("Nie udało się usunąć użytkownika. " + (err.response?.data?.detail || ""));
     }
   };
 
@@ -43,6 +59,7 @@ function AdminDashboard() {
               <th>Email</th>
               <th>Rola</th>
               <th>Status</th>
+              <th>Akcje</th>
             </tr>
           </thead>
           <tbody>
@@ -63,6 +80,18 @@ function AdminDashboard() {
                   ) : (
                     <span className="text-muted">Nieaktywny</span>
                   )}
+                </td>
+                <td className="text-center">
+                    {/* Wyświetlamy kosz tylko jeśli to nie jest konto aktualnie zalogowanego admina */}
+                    {/* (Porównujemy jako stringi lub liczby, zależnie jak zapisało się w bazie) */}
+                    <Button 
+                        variant="outline-danger" 
+                        size="sm"
+                        onClick={() => handleDelete(user.id)}
+                        title="Usuń użytkownika"
+                    >
+                        <Trash />
+                    </Button>
                 </td>
               </tr>
             ))}
