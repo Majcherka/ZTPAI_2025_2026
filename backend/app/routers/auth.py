@@ -85,3 +85,20 @@ def read_users(db: Session = Depends(get_db), current_user: User = Depends(get_c
     
     users = db.query(User).all()
     return users
+
+@router.delete("/users/{user_id}")
+def delete_user(user_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    if current_user.role != "ADMIN":
+        raise HTTPException(status_code=403, detail="Brak uprawnień.")
+
+    user_to_delete = db.query(User).filter(User.id == user_id).first()
+    if not user_to_delete:
+        raise HTTPException(status_code=404, detail="Użytkownik nie znaleziony")
+
+    if user_to_delete.id == current_user.id:
+        raise HTTPException(status_code=400, detail="Nie możesz usunąć własnego konta administratora.")
+
+    db.delete(user_to_delete)
+    db.commit()
+    
+    return {"message": "Użytkownik został usunięty"}
