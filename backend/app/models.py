@@ -18,7 +18,7 @@ class User(Base):
     is_active = Column(Boolean, default=True)
     role = Column(String, default="USER")
 
-    listings = relationship("Listing", back_populates="owner")
+    listings = relationship("Listing", back_populates="owner", cascade="all, delete-orphan")
     favorites = relationship("Listing", secondary=favorites_table, back_populates="favorited_by")
 
 class Listing(Base):
