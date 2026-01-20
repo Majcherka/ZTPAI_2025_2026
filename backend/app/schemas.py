@@ -1,4 +1,5 @@
 from pydantic import BaseModel, EmailStr
+from datetime import datetime
 
 class UserCreate(BaseModel):
     email: EmailStr
@@ -34,3 +35,20 @@ class ListingResponse(ListingBase):
     
     class Config:
         from_attributes = True
+
+class MessageCreate(BaseModel):
+    recipient_id: int
+    content: str
+
+class MessageResponse(BaseModel):
+    id: int
+    sender_id: int
+    recipient_id: int
+    content: str
+    timestamp: datetime
+    
+    sender_email: str | None = None
+    recipient_email: str | None = None
+
+    class Config:
+        from_attributes = True        
