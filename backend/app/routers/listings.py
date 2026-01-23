@@ -25,6 +25,7 @@ async def create_listing(listing: ListingCreate, db: Session = Depends(get_db), 
     await send_message_to_queue(message)
 
     return new_listing
+
 @router.get("/me", response_model=List[ListingResponse])
 def read_my_listings(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     return current_user.listings

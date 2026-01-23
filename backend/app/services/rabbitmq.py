@@ -1,7 +1,16 @@
+import os
+from dotenv import load_dotenv
 import aio_pika
 import json
 
-RABBITMQ_URL = "amqp://user:password@localhost:5672/"
+load_dotenv()
+
+RABBIT_USER = os.getenv("RABBITMQ_USER", "guest")
+RABBIT_PASSWORD = os.getenv("RABBITMQ_PASSWORD", "guest")
+RABBIT_HOST = os.getenv("RABBITMQ_HOST", "localhost")
+RABBIT_PORT = os.getenv("RABBITMQ_PORT", "5672")
+
+RABBITMQ_URL = f"amqp://{RABBIT_USER}:{RABBIT_PASSWORD}@{RABBIT_HOST}:{RABBIT_PORT}/"
 
 async def send_message_to_queue(message_data: dict):
     connection = await aio_pika.connect_robust(RABBITMQ_URL)
