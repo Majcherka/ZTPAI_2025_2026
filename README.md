@@ -35,3 +35,43 @@ Upewnij się, że masz zainstalowane:
 W głównym katalogu projektu:
 ```bash
 docker-compose up -d
+
+```
+
+### 3.Konfiguracja i uruchomienie Backendu
+```bash
+cd backend
+python -m venv venv
+.\venv\Scripts\Activate
+```
+
+Zainstaluj zależności:
+```bash
+pip install -r requirements.txt
+```
+Uruchom serwer backendu:
+```bash
+uvicorn main:app --reload
+```
+
+Seedowanie bazy:
+```bash
+python seed_db.py
+```
+
+### 4. Konfiguracja front-end
+
+```
+cd frontend
+npm install
+```
+
+Uruchomienie aplikacji:
+
+```bash
+npm run dev
+```
+
+Aplikacja uruchomi się pod adresem: http://localhost:5173
+
+
